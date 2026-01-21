@@ -4,8 +4,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
 
-from mrz_backend.main import app as mrz_app
-from face_backend.main import app as face_app
+from UnifiedBackend.mrz_backend.main import app as mrz_app
+from UnifiedBackend.face_backend.main import app as face_app
 
 app = FastAPI(title="Unified Access Control API")
 
