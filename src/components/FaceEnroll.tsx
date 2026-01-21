@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 import type { PersonalInfo } from "../types";
+import { apiUrl } from "../api";
 
 type Props = {
   info: PersonalInfo;
@@ -372,7 +373,7 @@ export function FaceEnroll({ info, onBack, onBackToMrz, onDone }: Props) {
       // images (unchanged)
       blobs.forEach((b, i) => form.append("images", b, `enroll_${i + 1}.jpg`));
 
-      const res = await fetch(`/api/face/enroll`, {
+      const res = await fetch(apiUrl("/face/enroll"), {
         method: "POST",
         body: form,
       });

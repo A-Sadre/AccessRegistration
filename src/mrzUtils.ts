@@ -1,4 +1,5 @@
 import type { PersonalInfo } from './types'
+import { apiUrl } from "./api";
 
 export type ExtractResult = {
   info: PersonalInfo | null
@@ -15,7 +16,7 @@ export async function extractPersonalInfoFromImage(
   const form = new FormData()
   form.append('file', blob, 'passport.jpg')
 
-  const res = await fetch('/api/mrz/extract', {
+  const res = await fetch(apiUrl("/mrz/extract"), {
 
     method: 'POST',
     body: form,
