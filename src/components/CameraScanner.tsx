@@ -32,7 +32,7 @@ export function CameraScanner({
     setProcTextIndex(0);
     const id = window.setInterval(() => {
       setProcTextIndex((i) => (i + 1) % processingTexts.length);
-    }, 800);
+    }, 2000);
     return () => window.clearInterval(id);
   }, [isProcessing, processingTexts.length]);
 
