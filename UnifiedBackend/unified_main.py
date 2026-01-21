@@ -12,7 +12,7 @@ app = FastAPI(title="Unified Access Control API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # dev
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

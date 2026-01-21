@@ -195,7 +195,7 @@ export default function App() {
                   <h1 className="screen-title">التحقق الرقمي من الهوية</h1>
 
                   <p className="screen-subtitle screen-subtitle--hero screen-subtitle--gap">
-                    تحقق من هويتك بأمان باستخدام الهوية الوطنية أو جواز السفر
+                    تحقق من هويتك بأمان باستخدام جواز السفر لدخول آمن لمنشآتنا
                   </p>
                 </div>
 

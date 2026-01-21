@@ -19,7 +19,7 @@ from face_backend.antispoof.silentface_engine import SilentFaceLiveness
 # -----------------------------
 # Config
 # -----------------------------
-API_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
+API_ORIGINS = ["*"]
 
 # -----------------------------
 # Liveness (Silent-Face)
@@ -236,71 +236,7 @@ def run_liveness_or_403(img_bgr: np.ndarray) -> dict:
         "debug": dbg,
     }
 
-    if not ENABLE_LIVENESS:
-        return {"enabled": False}
-
-    if liveness_engine is None:
-        raise HTTPException(status_code=500, detail={"reason": "liveness_engine_not_initialized"})
-
-    with liveness_lock:
-        is_live, score, label, bbox, dbg = liveness_engine.predict(img_bgr, live_thresh=LIVENESS_THRESH)
-
-    # Force a consistent meaning:
-    # - label = argmax class
-    # - score = REAL probability (avg_pred[real_label]) if available, else fallback to returned score
-    real_prob = _extract_real_prob_from_dbg(dbg, LIVENESS_REAL_LABEL)
-    if real_prob is None:
-        real_prob = float(score)
-
-    predicted_label = int(label) if isinstance(label, (int, np.integer)) else int(np.argmax(np.array(dbg.get("avg_pred", [0, 0, 0])))) if isinstance(dbg, dict) else -1
-
-    # ---- Binary decision (hard) ----
-    # 1) super low real prob => instant spoof
-    if real_prob < float(LIVENESS_HARD_BLOCK):
-        raise HTTPException(
-            status_code=403,
-            detail={
-                "reason": "spoof_detected",
-                "liveness": {
-                    "live": False,
-                    "label": predicted_label,
-                    "score": round(float(real_prob), 6),
-                    "threshold": float(LIVENESS_THRESH),
-                    "hard_block": float(LIVENESS_HARD_BLOCK),
-                    "bbox_xywh": bbox,
-                },
-                # enable temporarily for tuning
-                # "debug": dbg,
-            },
-        )
-
-    # 2) pass only if >= main threshold
-    if real_prob < float(LIVENESS_THRESH):
-        raise HTTPException(
-            status_code=403,
-            detail={
-                "reason": "spoof_detected",
-                "liveness": {
-                    "live": False,
-                    "label": predicted_label,
-                    "score": round(float(real_prob), 6),
-                    "threshold": float(LIVENESS_THRESH),
-                    "hard_block": float(LIVENESS_HARD_BLOCK),
-                    "bbox_xywh": bbox,
-                },
-                # "debug": dbg,
-            },
-        )
-
-    return {
-        "enabled": True,
-        "live": True,
-        "label": predicted_label,
-        "score": round(float(real_prob), 6),  # REAL probability (consistent)
-        "threshold": float(LIVENESS_THRESH),
-        "hard_block": float(LIVENESS_HARD_BLOCK),
-        "bbox_xywh": bbox,
-    }
+    
 
 # -----------------------------
 # DB persistence
