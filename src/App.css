@@ -196,7 +196,7 @@ body{
   justify-content: space-between;
   gap: 14px;
   padding: 18px 18px;
-  min-height: 100px;
+  min-height: 90px;
 }
 
 .feature-card--hero{
