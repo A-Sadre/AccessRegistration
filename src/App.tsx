@@ -372,11 +372,11 @@ export default function App() {
                 <h1 className="screen-title">التحقق من صحة المعلومات</h1>
                 <p className="screen-subtitle">قم بمراجعة المعلومات وتعديلها عند الحاجة</p>
 
-                {faceImage && (
+                {/* {faceImage && (
                   <div className="face-preview-wrap">
                     <img className="face-preview" src={faceImage} alt="الوجه" />
                   </div>
-                )}
+                )} */}
 
                 {error && <div className="alert alert-danger">{error}</div>}
 
