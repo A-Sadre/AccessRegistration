@@ -98,7 +98,7 @@ export default function App() {
   const [step, setStep] = useState<Step>("intro");
   const [info, setInfo] = useState<PersonalInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [faceImage, setFaceImage] = useState<string | null>(null);
+  // const [faceImage, setFaceImage] = useState<string | null>(null);
 
   const [form, setForm] = useState<FormState | null>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -131,7 +131,7 @@ export default function App() {
 
   const handleMrzDetected = (data: { info: PersonalInfo; faceDataUrl?: string }) => {
     setInfo(data.info);
-    setFaceImage(data.faceDataUrl || null);
+    // setFaceImage(data.faceDataUrl || null);
     setError(null);
 
     setForm({
@@ -530,7 +530,7 @@ export default function App() {
                 setInfo(null);
                 setForm(null);
                 setFormErrors({});
-                setFaceImage(null);
+                // setFaceImage(null);
                 setError(null);
               }}
               onBack={() => setStep(4)}
